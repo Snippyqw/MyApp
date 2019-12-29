@@ -1,17 +1,24 @@
 import React from 'react';
 import { 
   StyleSheet,
-  Text,
   View,
   Button, 
   Animated, 
-  Easing,
-  TextInput,
   Dimensions,
 } from 'react-native';
-import { Avatar, Card, Title, Paragraph } from 'react-native-paper';
-import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
+import { Card, Title } from 'react-native-paper';
+import { ScrollView } from 'react-native-gesture-handler';
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import Counter, { counter } from "./Counter";
+import gas from './../Images/gas.jpeg';
+import clothes from './../Images/clothes.jpeg';
+import food from './../Images/food.jpeg';
+import i18n from '../i18n';
 
+const store1 = createStore(counter);
+const store2 = createStore(counter);
+const store3 = createStore(counter);
 
 const { width: WIDTH } = Dimensions.get('window')
 const { height: HEIGHT } = Dimensions.get('window')
@@ -38,11 +45,11 @@ class SomeScreen extends React.Component{
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'red',
+        backgroundColor: '#rgb(66, 65, 96)',
         width: WIDTH,
         height: HEIGHT,
         paddingTop: 20,
-        paddingBottom:45
+        paddingBottom:45,
       },
       card:{
         width: WIDTH - 12,
@@ -56,62 +63,61 @@ class SomeScreen extends React.Component{
         shadowRadius: 2.62,
         
         elevation: 4,
+        color: 'red'
       },
-      btns: { 
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',        
-      },
+      title: {
+        fontWeight: 'bold',
+        color: '#rgb(66, 65, 96)',
+        fontSize: 30
+      }
+
       
     });
+
 
     return(
       <Animated.View style={{
         justifyContent: 'center',
         alignItems: 'center',
         opacity: fadeAnim,
-        position: 'absolute'
+        position: 'absolute',
       }
         }>
           <View style={styles.container}>
             <ScrollView style={{height: HEIGHT}}>
               <Card style={styles.card}>
                 <Card.Content>
-                  <Title>Card title</Title>
+                  <Title style={ styles.title }>{i18n.t('gas')}</Title>
                 </Card.Content>
-                <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                <Card.Cover source={ gas } />
                 <Card.Actions style={styles.btns}>
-                  <Button style={ styles.btn} title={'ok'}/>
-                  <Button style={ styles.btn} title={'cancel'}/>
-                  <Button style={ styles.btn} title={'ok'}/>
-                  <Button style={ styles.btn} title={'cancel'}/>
+                <Provider store={store1}>
+                    <Counter />
+                  </Provider>
                 </Card.Actions>
               </Card>
 
               <Card style={styles.card}>
                 <Card.Content>
-                  <Title>Card title</Title>
+                  <Title style={ styles.title }>{i18n.t('food')}</Title>
                 </Card.Content>
-                <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                <Card.Cover source={ food } />
                 <Card.Actions style={styles.btns}>
-                  <Button style={ styles.btn} title={'ok'}/>
-                  <Button style={ styles.btn} title={'cancel'}/>
-                  
-                  <Button style={ styles.btn} title={'ok'}/>
-                  <Button style={ styles.btn} title={'cancel'}/>
+                <Provider store={store2}>
+                    <Counter />
+                  </Provider>
                 </Card.Actions>
               </Card>
 
               <Card style={styles.card}>
                 <Card.Content>
-                  <Title>Card title</Title>
+                  <Title style={ styles.title }>{i18n.t('clothes')}</Title>
                 </Card.Content>
-                <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+                <Card.Cover source={ clothes } />
                 <Card.Actions style={styles.btns}>
-                  <Button style={ styles.btn} title={'ok'}/>
-                  <Button style={ styles.btn} title={'cancel'}/>
-                  <Button style={ styles.btn} title={'ok'}/>
-                  <Button style={ styles.btn} title={'cancel'}/>
+                <Provider store={store3}>
+                    <Counter />
+                  </Provider>
                 </Card.Actions>
               </Card>
 

@@ -9,7 +9,25 @@ export default {
     logout: 'Kijelentkezés',
     where: 'Hol vagyok?',
     inv: 'Ismerősök meghívása',
+    inv2: 'Ismerős meghivása',
+    inv3: 'Biztos szeretnéd meghívni: ',
     lang: 'Nyelv',
-    read: 'Kód beolvasása'
+    read: 'Kód beolvasása',
+    pic: 'Profilkép választás',
+    yes: 'Igen',
+    no: 'Nem',
+    logoutAlert: 'Biztosan ki akarsz lépni?',
+    passAg: 'Jelszó megerősítés',
+    succ: 'Sikeres regisztráció',
+    den: 'Sikertelen regisztráció',
+    ok: 'Oké',
+    propass: 'Jelszó megváltoztatása',
+    loginAlert: 'Hibás felhasználónév vagy jelszó!',
+    food: 'Étel',
+    gas: 'Üzemanyag',
+    clothes: 'Ruházat',
+    langu: 'Fejlesztés alatt',
+    can: 'Mégse',
+
 
   };

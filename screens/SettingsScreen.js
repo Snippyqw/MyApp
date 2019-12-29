@@ -5,21 +5,29 @@ import {
   View,
   Button, 
   Animated, 
-  Easing,
-  TextInput,
-  Dimensions
+  Dimensions,
+  Modal,
+  Alert
 } from 'react-native';
 import MapView from 'react-native-maps';
 import i18n from '../i18n';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Contacts from './Contacts';
 
 
-const { width: WIDTH } = Dimensions.get('window')
-const { height: HEIGHT } = Dimensions.get('window')
+const { width: WIDTH } = Dimensions.get('window');
+const { height: HEIGHT } = Dimensions.get('window');
+
 class SettingsScreen extends React.Component{
-  state = {
-    fadeAnim: new Animated.Value(0),
+  constructor(props){
+    super(props);
+    this.state = {
+      fadeAnim: new Animated.Value(0),
+      modal: false,
+    }
   }
+
+  
 
   componentDidMount() {
     const { fadeAnim } = this.state;
@@ -31,15 +39,17 @@ class SettingsScreen extends React.Component{
     ]).start();
   }
 
+  
 
   render() {
     const { fadeAnim } = this.state;
+    const { modal } = this.state;
     const styles = StyleSheet.create({
       container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#rgb(66, 65, 96)',
         width: WIDTH,
         height: HEIGHT,
         paddingBottom:45
@@ -90,22 +100,47 @@ class SettingsScreen extends React.Component{
       },
       list: {
         width: WIDTH-20,
-        borderBottomColor: 'rgb(66, 65, 96)',
-        borderBottomWidth: 3,
         borderRadius: 20,
         marginTop: 10,
-        backgroundColor:'rgba(66, 65, 96, 0.7)',
+        backgroundColor:'#rgb(52, 52, 76)',
         marginLeft: 10,
         marginRight: 10
 
       },
       listSet:{
         fontSize: 20,
-        padding: 10, 
+        padding: 10,
+        color: 'rgb(250, 194, 197)'
+      },
+      modal: {
+        flex: 1,
+        margin: 20,
+        borderWidth: 0.5,
+        borderColor: 'black',
+        backgroundColor: 'white',
+        borderRadius: 20,
+        
+      },
+      modalbtn: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', //Here is the trick
+        bottom: 0, //Here is the trick
+      },
+      head: {
+        color: 'rgb(250, 194, 197)',
+        fontSize: 30,
+        fontWeight: 'bold',
+        width: WIDTH,
+        paddingLeft: 5,
+        borderBottomWidth: 3,
+        borderBottomColor: 'black',
+        backgroundColor:'#rgb(52, 52, 76)',
+
       }
     });
-
     return(
+      
       <Animated.View style={{
         justifyContent: 'center',
         alignItems: 'center',
@@ -116,13 +151,24 @@ class SettingsScreen extends React.Component{
         }>
           <View style={styles.container}>
             <View style={styles.Settings}>
-              <Text style={{fontSize: 30, fontWeight: 'bold', width: WIDTH, paddingLeft: 5, backgroundColor:'grey'}}>asd</Text>
-              <TouchableOpacity style={styles.list}>
+            <Text style={ styles.head }>{i18n.t('settin')}</Text>
+              <TouchableOpacity style={styles.list}
+                  onPress={() => {Alert.alert(
+                    i18n.t('langu'),
+                    null,
+                    [
+                      {text: (i18n.t('ok')), onPress: () => this.close, style: 'cancel'},
+                    ]
+                  )
+                }}
+              >
                 <Text style={styles.listSet}>
                   {i18n.t('lang')}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.list}>
+              <TouchableOpacity style={styles.list}
+                onPress={() => {this.setState({modal: true})}}
+              >
                 <Text style={styles.listSet}>
                   {i18n.t('inv')}
                 </Text>
@@ -134,44 +180,23 @@ class SettingsScreen extends React.Component{
               <MapView style={styles.map}/>
             </View>
           </View>
+          
+          
+            <Modal  animationType={"slide"}
+                    visible={ modal }
+                    transparent={true}
+            >
+              <View style={styles.modal}>
+                <Contacts/>
+               
+                <Button title={i18n.t('can')} style={ {color: 'green'} } 
+                  onPress={() => {this.setState({modal: false})}}
+                />
+              </View>
+            </Modal>
       </Animated.View>
     );
   }
 }
 
 export default SettingsScreen;
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*const SomeScreen = ({ navigation }) => (
-  <View style={styles.container}>
-     <TextInput 
-            style={styles.input}
-            placeholder={'Felhasználónév'}
-            placeholderTextColor={'rgb(250, 194, 197)'}
-            underlineColorAndroid='transparent'
-
-        />
-    
-  </View>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-});
-
-export default SomeScreen;*/
